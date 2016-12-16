@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="HSQLDB (Local) - inovus" uuid="0b3ca1d5-f345-4c65-b543-946eb0667d4b">
+    <database-info product="HSQL Database Engine" version="2.3.4" jdbc-version="4.0" driver-name="HSQL Database Engine Driver" driver-version="2.3.4">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
+    <schema name="PUBLIC" catalog="PUBLIC"/>
+  </data-source>
+  <data-source name="HSQLDB (Local) - inovus.tmp" uuid="2d4b5cf1-0509-4005-8f15-061c20a20247">
+    <database-info product="HSQL Database Engine" version="2.3.4" jdbc-version="4.0" driver-name="HSQL Database Engine Driver" driver-version="2.3.4">
+      <identifier-quote-string>&quot;</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact"/>
+    <schema name="PUBLIC" catalog="PUBLIC"/>
+  </data-source>
+</component>
