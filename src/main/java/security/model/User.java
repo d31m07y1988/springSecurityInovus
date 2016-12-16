@@ -1,11 +1,15 @@
 package security.model;
 
 import org.hibernate.annotations.*;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.Set;
 
 /**
@@ -36,6 +40,17 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public User(Integer id, String login, String password, Role role, Role... roles) {
+        this(id, login, password, EnumSet.of(role, roles));
+    }
+
+    public User(Integer id, String login, String password,  Set<Role> roles) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        setRoles(roles);
+    }
+
     public User() {
 
     }
@@ -54,6 +69,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? Collections.emptySet() : EnumSet.copyOf(roles);
     }
 
     @Override

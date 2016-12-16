@@ -2,6 +2,7 @@ package security.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,11 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User getByLogin(String login) {
         Session session = sessionFactory.getCurrentSession();
-        return null;
+        //Query query = session.createQuery("from User where login=:login");
+        return (User) session.createQuery(
+                "select u from User u where u.login = :login" )
+                .setParameter( "login", login )
+                .uniqueResult();
     }
 
     @Override

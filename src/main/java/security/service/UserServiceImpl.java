@@ -1,6 +1,9 @@
 package security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import security.model.User;
 import security.repository.UserRepository;
@@ -8,7 +11,7 @@ import security.repository.UserRepository;
 import java.util.List;
 
 @Service("userSevice")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -35,5 +38,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.getAll();
+    }
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = getByLogin(username);
+
+        return new org.springframework.security.core.userdetails.User(user.getLogin(),
+                user.getPassword(), user.getRoles());
     }
 }
