@@ -26,8 +26,9 @@ public class RootController {
     }
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
-    public String welcome(Model model) {
+    public String welcome(Model model, Principal principal) {
         model.addAttribute("greet", greetingUser.getGreetingPhrase());
+        model.addAttribute("userName", principal.getName());
         return "welcome";
     }
 

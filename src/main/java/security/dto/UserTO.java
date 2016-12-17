@@ -27,7 +27,7 @@ public class UserTO{
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.login = login.trim();
     }
 
     public String getPassword() {

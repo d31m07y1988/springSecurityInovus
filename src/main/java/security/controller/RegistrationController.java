@@ -1,6 +1,7 @@
 package security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 import security.dto.UserTO;
 import security.error.UserAlreadyExistException;
 import security.model.User;
 import security.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -35,7 +36,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public String register(Model model, @ModelAttribute("user") @Valid UserTO userTO,
-                                 BindingResult result, WebRequest request, Errors errors) {
+                           BindingResult result, WebRequest request, Errors errors) {
         User registered = new User();
         if (!result.hasErrors()) {
             registered = createUserAccount(userTO, result);
@@ -46,8 +47,12 @@ public class RegistrationController {
         if (result.hasErrors()) {
             model.addAttribute("user", userTO);
             return "signUp";
-        }
-        else {
+        } else {
+            SecurityContextHolder.getContext().setAuthentication(
+                    new UsernamePasswordAuthenticationToken(
+                            userTO.getLogin(),
+                            userTO.getPassword(),
+                            registered.getRoles()));
             return "redirect:welcome";
         }
     }

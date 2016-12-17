@@ -19,7 +19,7 @@
         </sec:authorize>
         <sec:authorize access="isAuthenticated()">
             <form:form class="navbar-form" action="logout" method="post">
-                <p><c:out value="${greet}"/>, <sec:authentication property="principal.username"/></p>
+                <p><c:out value="${greet}"/>, <c:out value="${userName}"/>!</p>
                 <p>
                     <button class="btn btn-primary" type="submit">Выйти</button>
                 </p>
