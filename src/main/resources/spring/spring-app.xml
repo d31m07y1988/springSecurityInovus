@@ -9,5 +9,6 @@
     <context:annotation-config/>
     <context:component-scan base-package="security.service"/>
 
-    <bean name="greeating" class="security.util.GreetingUser" scope="prototype"/>
+    <bean name="greeating" class="security.util.GreetingUser" scope="request"/>
+
 </beans>

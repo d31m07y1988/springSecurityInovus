@@ -1,43 +1,68 @@
 package security.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import security.dto.UserTO;
+import security.error.UserAlreadyExistException;
+import security.model.Role;
 import security.model.User;
 import security.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service("userSevice")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    private UserRepository userRepository;
+    private UserRepository repository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private ShaPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public User save(User user) {
-        return userRepository.save(user);
+        return repository.save(user);
     }
 
     @Override
     public User get(int id) {
-        return userRepository.get(id);
+        return repository.get(id);
     }
 
     @Override
     public User getByLogin(String login) {
-        return userRepository.getByLogin(login);
+        return repository.getByLogin(login);
     }
 
     @Override
     public List<User> getAll() {
-        return userRepository.getAll();
+        return repository.getAll();
+    }
+
+    @Override
+    public User registerNewUserAccount(final UserTO userTO) throws UserAlreadyExistException {
+        if (loginExist(userTO.getLogin())) {
+            throw new UserAlreadyExistException("There is an account with that login address: " + userTO.getLogin());
+        }
+        User user = new User();
+        user.setLogin(userTO.getLogin());
+        String codedPassword = passwordEncoder.encodePassword(userTO.getPassword(), null);
+        user.setPassword(codedPassword);
+        user.setRoles(Arrays.asList(Role.ROLE_USER));
+        return save(user);
+    }
+
+    private boolean loginExist(String login) {
+        return getByLogin(login) != null;
     }
 
 

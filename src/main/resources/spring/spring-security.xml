@@ -17,14 +17,12 @@
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 
         <form-login login-page="/sign-in" default-target-url="/welcome"
-                    username-parameter="username"
+                    username-parameter="login"
                     password-parameter="password"
                     authentication-failure-url="/sign-in?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-url="/logout" logout-success-url="/sign-in"/>
-<!--
         <csrf disabled="true"/>
--->
     </http>
 
     <beans:bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder"/>

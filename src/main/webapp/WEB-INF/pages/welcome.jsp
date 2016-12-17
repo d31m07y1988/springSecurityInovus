@@ -5,13 +5,14 @@
 <html>
 <head>
     <jsp:include page="elements/headers.jsp"/>
+    <title>Spring security</title>
 </head>
 <body>
 
 <div class="container">
 
     <div class="jumbotron" style="margin-top: 20px;">
-        <h1>Welcome</h1>
+        <h2>Welcome</h2>
 
         <sec:authorize access="!isAuthenticated()">
             <p><a class="btn btn-lg btn-success" href="<c:url value="/sign-in" />" role="button">Войти</a></p>
@@ -20,15 +21,13 @@
             <form:form class="navbar-form" action="logout" method="post">
                 <p><c:out value="${greet}"/>, <sec:authentication property="principal.username"/></p>
                 <p>
-                    <input type="submit" class="btn btn-primary" value="Выйти">
+                    <button class="btn btn-primary" type="submit">Выйти</button>
                 </p>
             </form:form>
         </sec:authorize>
     </div>
 
-    <div class="footer">
-        <p>© Kazan 2016</p>
-    </div>
+    <jsp:include page="elements/footer.jsp"/>
 
 </div>
 

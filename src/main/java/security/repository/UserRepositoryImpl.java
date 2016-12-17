@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import security.model.User;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Repository("userRepository")
@@ -24,7 +25,8 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User save(User user) {
         Session session = sessionFactory.getCurrentSession();
-        return (User)session.save(user);
+        Serializable save = session.save(user);
+        return get((int)save);
     }
 
     @Override
@@ -38,8 +40,8 @@ public class UserRepositoryImpl implements UserRepository{
         Session session = sessionFactory.getCurrentSession();
         //Query query = session.createQuery("from User where login=:login");
         return (User) session.createQuery(
-                "select u from User u where u.login = :login" )
-                .setParameter( "login", login )
+                "select u from User u where LOWER(u.login) = :login" )
+                .setParameter( "login", login.toLowerCase())
                 .uniqueResult();
     }
 

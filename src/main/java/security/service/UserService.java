@@ -1,5 +1,7 @@
 package security.service;
 
+import security.dto.UserTO;
+import security.error.UserAlreadyExistException;
 import security.model.User;
 
 import java.util.List;
@@ -18,4 +20,6 @@ public interface UserService {
     User getByLogin(String login);
 
     List<User> getAll();
+
+    User registerNewUserAccount(UserTO userTO) throws UserAlreadyExistException;
 }

@@ -35,9 +35,8 @@ public class User implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     protected Set<Role> roles;
 
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
+    public User() {
+
     }
 
     public User(Integer id, String login, String password, Role role, Role... roles) {
@@ -51,9 +50,7 @@ public class User implements Serializable {
         setRoles(roles);
     }
 
-    public User() {
 
-    }
 
     public String getLogin() {
         return login;

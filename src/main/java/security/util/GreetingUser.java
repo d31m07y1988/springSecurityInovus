@@ -4,21 +4,19 @@ import java.time.LocalTime;
 
 public class GreetingUser {
 
-    private LocalTime currentTime = LocalTime.now();
+    private LocalTime currentTime;
 
     public GreetingUser() {
+        currentTime = LocalTime.now();
     }
 
     public String getGreetingPhrase(){
 
-        if(betweenTime(6,10)) return "Доброе утро";
-        if(betweenTime(10,18)) return "Добрый день";
-        if(betweenTime(18,22)) return "Добрый вечер";
-        if(betweenTime(22,6)) return "Доброй ночи";
+        if(currentTime.isAfter(LocalTime.of(22,0))) return "Доброй ночи";
+        if(currentTime.isAfter(LocalTime.of(18,0))) return "Добрый вечер";
+        if(currentTime.isAfter(LocalTime.of(10,0))) return "Добрый день";
+        if(currentTime.isAfter(LocalTime.of(6,0))) return "Доброе утро";
+        if(currentTime.isAfter(LocalTime.of(0,0))) return "Доброй ночи";
         return null;
-    }
-
-    private boolean betweenTime(int after, int before){
-        return currentTime.isAfter(LocalTime.of(after,0)) && currentTime.isBefore(LocalTime.of(before,0));
     }
 }
