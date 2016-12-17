@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import security.dto.UserTO;
 import security.error.UserAlreadyExistException;
 import security.model.Role;
@@ -48,10 +49,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return repository.getAll();
     }
 
+    @Transactional
     @Override
     public User registerNewUserAccount(final UserTO userTO) throws UserAlreadyExistException {
         if (loginExist(userTO.getLogin())) {
-            throw new UserAlreadyExistException("There is an account with that login address: " + userTO.getLogin());
+            throw new UserAlreadyExistException("Пользователь с логином " + userTO.getLogin() + " уже зарегистрирован");
         }
         User user = new User();
         user.setLogin(userTO.getLogin());

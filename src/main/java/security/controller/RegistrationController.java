@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import security.dto.UserTO;
+import security.error.UserAlreadyExistException;
 import security.model.User;
 import security.service.UserService;
 
@@ -35,13 +36,28 @@ public class RegistrationController {
     @RequestMapping(value = "/sign-up", method = RequestMethod.POST)
     public String register(Model model, @ModelAttribute("user") @Valid UserTO userTO,
                                  BindingResult result, WebRequest request, Errors errors) {
-        User registered = userService.registerNewUserAccount(userTO);
-        if (registered == null) {
-            result.rejectValue("login", "message.regError");
-            model.addAttribute("user", userTO);
-            return "sign-up";
+        User registered = new User();
+        if (!result.hasErrors()) {
+            registered = createUserAccount(userTO, result);
         }
-
-        return "redirect:welcome";
+        if (registered == null) {
+            result.rejectValue("login", null, "Пользователь с таким именем уже зарегистрирован");
+        }
+        if (result.hasErrors()) {
+            model.addAttribute("user", userTO);
+            return "signUp";
+        }
+        else {
+            return "redirect:welcome";
+        }
+    }
+    private User createUserAccount(UserTO userTO, BindingResult result) {
+        User registered = null;
+        try {
+            registered = userService.registerNewUserAccount(userTO);
+        } catch (UserAlreadyExistException e) {
+            return null;
+        }
+        return registered;
     }
 }

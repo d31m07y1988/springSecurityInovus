@@ -17,7 +17,7 @@ public class UserTO{
 
     @NotNull
     @NotEmpty
-    @Pattern(regexp = "(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?!.*\\W)(?!.*[[:punct:]]).*$",
+    @Pattern(regexp = "(?=^.{8,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?!.*\\W).*$",
             message = "пароль недостаточно сложен: должны быть цифры, заглавные и строчные буквы и длинна минимум 8 символов")
     private String password;
     private String matchingPassword;
