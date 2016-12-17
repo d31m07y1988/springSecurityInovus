@@ -13,6 +13,9 @@
             <h2 class="form-signin-heading">Введите учетные данные</h2>
             <input type="text" class="form-control" name="login" placeholder="Login">
             <input type="password" class="form-control" name="password" placeholder="Password">
+            <c:if test="${not empty error}">
+                <c:out value="${error}"/>
+            </c:if>
             <button type="submit" class="btn btn-primary btn-md btn-block">Войти</button>
         </form:form>
         <a class="btn btn-primary btn-md btn-block" href="/sign-up">Регистрация</a>
