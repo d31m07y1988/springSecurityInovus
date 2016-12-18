@@ -15,8 +15,6 @@ import security.dto.UserTO;
 import security.error.UserAlreadyExistException;
 import security.model.User;
 import security.service.UserService;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 
