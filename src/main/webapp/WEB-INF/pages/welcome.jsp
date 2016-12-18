@@ -12,11 +12,6 @@
 <div class="container">
 
     <div class="jumbotron" style="margin-top: 20px;">
-        <h2>Welcome</h2>
-
-        <sec:authorize access="!isAuthenticated()">
-            <p><a class="btn btn-lg btn-success" href="<c:url value="/sign-in" />" role="button">Войти</a></p>
-        </sec:authorize>
         <sec:authorize access="isAuthenticated()">
             <form:form class="navbar-form" action="logout" method="post">
                 <p><c:out value="${greet}"/>, <c:out value="${userName}"/>!</p>

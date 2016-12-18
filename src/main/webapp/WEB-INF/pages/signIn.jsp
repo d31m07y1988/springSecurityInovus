@@ -19,6 +19,8 @@
             <button type="submit" class="btn btn-primary btn-md btn-block">Войти</button>
         </form:form>
         <a class="btn btn-primary btn-md btn-block" href="/sign-up">Регистрация</a>
+
+        <p>Зарегистрирован User(Zaq12wsx), Admin(Qwerty123)</p>
     </div>
     <jsp:include page="elements/footer.jsp"/>
 </div>
